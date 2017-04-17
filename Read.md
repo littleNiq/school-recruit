@@ -51,6 +51,3 @@ Last index of 1002 is : 1
 **3.hashmap 底层是怎么实现的？** 
 数组加链表。HashMap底层就是一个数组，数组中的每一项又是一个链表。当新建一个HashMap的时候，就会初始化一个数组。Entry就是数组中的元素，每个Map.Entry就是一个key-value对，它持有一个指向下一个元素的引用，这就构成了链表。
 
-
-**4.malloc和new的区别**
-

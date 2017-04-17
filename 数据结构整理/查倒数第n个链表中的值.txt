@@ -1,0 +1,46 @@
+#endif
+/****************************/
+#if(1)
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+using namespace std;
+typedef int ElemType;
+typedef struct node
+{
+    ElemType data;
+    struct node *next;
+}LinkList;
+LinkList *found(LinkList *head,int k) //查找
+{
+    LinkList *r;
+    r = head;
+    while(k--)
+        r=r->next;
+    return r;
+}
+int main()
+{
+    LinkList *head,*r,*s;
+    char ch;
+    int k,num;
+    head = (LinkList *)malloc(sizeof(LinkList));//头插法建表
+    head->next = NULL;
+    while(1)
+    {
+        scanf("%d",&num);
+        ch = getchar();
+        r = (LinkList *)malloc(sizeof(LinkList));
+        r->data = num;
+        r->next = head->next;
+        head->next = r;
+        if(ch == '\n')break;
+    }
+    while(1)
+    {
+        scanf("%d",&k);
+        printf("%d\n",found(head,k)->data);
+    }
+    return 0;
+}
+#endif

@@ -84,3 +84,9 @@ public static void main(String[] args){
 }  
 }  
 运行一段时间之后，java虚拟机栈就会因为内存太小无法创建线程而产生OutOfMemoryError。  
+# (4).方法区溢出：
+运行时常量池是方法区的一部分，他们都属于HotSpot虚拟机中的永久代内存区域。方法区用于存放Class的相关信息，Java的反射和动态代理可以动态产生Class，另外第三方的CGLIB可以直接操作字节码，也可以动态产生Class，实验通过CGLIB来演示，同样使用-XX:PermSize=10m和-XX:MaxPermSize=10m将永久代最大内存和最小内存设置为10MB大小，并且由于永久代最大内存和最小内存大小相同，因此无法扩展。
+
+## (5).本机直接内存溢出：
+
+Java虚拟机可以通过参数-XX:MaxDirectMemorySize设定本机直接内存可用大小，如果不指定，则默认与java堆内存大小相同。JDK中可以通过反射获取Unsafe类(Unsafe的getUnsafe()方法只有启动类加载器Bootstrap才能返回实例)直接操作本机直接内存。通过使用-XX:MaxDirectMemorySize=10M，限制最大可使用的本机直接内存大小为10MB，例子代码如下：

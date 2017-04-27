@@ -23,11 +23,64 @@ Java堆用于存储实例对象，只要不断创建对象，并且保证GC Root
   }  
   }  
   }  
+运行一段时间就会发现产生OutOfMemoryError异常，并且产生了堆内存异常dump文件。
 
 ## 各个内存区域容量设置的参数
 * -Xss2M：设置栈的容量为2M
 * -Xms10M：设置堆的初始容量为10M
-* -Xmx10M：设置对的最大容量为10M
+* -Xmx10M：设置堆的最大容量为10M
 * -XX:PermSize=10M：设置方法区的初始容量为10M
 * -XX:MaxPermSize=10M：设置方法区的最大容量为10M
 * -XX:MaxDirectMemorySize=10M：设置直接内存的最大容量为10M
+
+# (2).java虚拟机栈和本地方法栈溢出：
+
+由于Sun的HotSpot虚拟机不区分java虚拟机栈和本地方法栈，因此对于HotSpot虚拟机来说-Xoss参数(设置本地方法栈大小)虽然存在，但是实际上是无效的，栈容量只能由-Xss参数设定。
+
+由于Java虚拟机栈会出现StackOverflowError和OutOfMemoryError两种异常，所以分别使用两个例子演示这两种情况：
+
+## a.java虚拟机栈深度溢出：
+
+单线程的环境下，无论是由于栈帧太大，还是虚拟机栈容量太小，当内存无法再分配的时候，虚拟机总抛出StackOverflowError异常。使用-Xss128k将java虚拟机栈大小设置为128kb，例子代码如下：
+
+### eg:  
+public class JavaVMStackOF{  
+	private int stackLength = 1;  
+	public void stackLeak(){  
+		statckLength++;  
+		stackLeak();  
+}  
+public static void main(String[] args){  
+	JavaVMStackOF oom = new JavaVMStackOF();  
+oom.stackLeak();  
+}  
+}  
+运行一段时间后，产生StackOverflowError异常。Java虚拟机栈溢出一般会产生在方法递归调用过多而java虚拟机栈内存不够的情况下。
+
+## b.java虚拟机栈内存溢出：
+
+多线程环境下，能够创建的线程最大内存=物理内存-最大堆内存-最大方法区内存，在java虚拟机栈内存一定的情况下，单个线程占用的内存越大，所能创建的线程数目越小，所以在多线程条件下很容易产生java虚拟机栈内存溢出的异常。
+
+使用-Xss2m参数设置java虚拟机栈内存大小为2MB，例子代码如下：
+### eg:  
+public class JavaVMStackOOM{  
+	private void dontStop(){  
+	while(true){  
+}  
+}  
+public void stackLeakByThread(){  
+	while(true){  
+		Thread t = new Thread(new Runnable(){  
+	public void run(){  
+	dontStop();  
+}  
+});  
+t.start();  
+}  
+}   
+public static void main(String[] args){  
+	JavaVMStackOOM oom = new JavaVMStackOOM();  
+	oom. stackLeakByThread();    
+}  
+}  
+运行一段时间之后，java虚拟机栈就会因为内存太小无法创建线程而产生OutOfMemoryError。  

@@ -25,3 +25,6 @@
 需要把配置文件放到taotao-manager-web工程下。因为此工程为war工程，其他的工程只是一个jar包。
 聚合工程里面没有代码，也没有配置文件.（pom）  
 web工程在运行时是Tomcat读取配置文件的。Tomcat不支持从外面读取配置文件。
+### Mybatis逆向工程  
+* 执行逆向工程   
+ 使用官方网站的mapper自动生成工具mybatis-generator-core-1.3.2来生成po类和mapper映射文件。  

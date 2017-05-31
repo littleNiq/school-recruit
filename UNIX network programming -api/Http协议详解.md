@@ -69,3 +69,5 @@ HTTP协议定义了相关的消息头来使WEB缓存尽可能好的工作。
 ## 客户端缓存生效的常见流程
 
 服务器收到请求时，会在200OK中回送该资源的Last-Modified和ETag头，客户端将该资源保存在cache中，并记录这两个属性。当客户端需要发送相同的请求时，会在请求中携带If-Modified-Since和If-None-Match两个头。两个头的值分别是响应中Last-Modified和ETag头的值。服务器通过这两个头判断本地资源未发生变化，客户端不需要重新下载，返回304响应。
+## HTTP常见的状态码：
+https://ichabodphp.github.io/tech/http_status_code/

@@ -24,3 +24,12 @@
         在HTTP/1.1协议中，所有的请求头，除post外，都是可选的。
         (在HTTP/1.1 协议中，所有的请求头，除Host外，都是可选的）
 [http://www.cnblogs.com/yaozhongxiao/archive/2013/03/02/2940252.html]
+## Session的实现方式：
+1、使用Cookie来实现:
+
+服务器给每个Session分配一个唯一的JSESSIONID，并通过Cookie发送给客户端。
+当客户端发起新的请求的时候，将在Cookie头中携带这个JSESSIONID。这样服务器能够找到这个客户端对应的Session。
+
+2、使用URL回写来实现
+URL回写是指服务器在发送给浏览器页面的所有链接中都携带JSESSIONID的参数，这样客户端点击任何一个链接都会把JSESSIONID带会服务器。如果直接在浏览器输入服务端资源的url来请求该资源，那么Session是匹配不到的。
+Tomcat对Session的实现，是一开始同时使用Cookie和URL回写机制，如果发现客户端支持Cookie，就继续使用Cookie，停止使用URL回写。如果发现Cookie被禁用，就一直使用URL回写。jsp开发处理到Session的时候，对页面中的链接记得使用response.encodeURL() 。

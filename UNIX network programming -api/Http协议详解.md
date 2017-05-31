@@ -12,5 +12,11 @@
         GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。
         GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。
 
-## 
+## 请求信息：
+发出的请求信息格式如下：
+
+        请求行，例如GET /images/logo.gif HTTP/1.1，表示从/images目录下请求logo.gif这个文件。
+        （请求）头，例如Accept-Language: en
+        空行
+        可选的消息体　请求行和标题必须以<CR><LF>作为结尾（也就是，回车然后换行）。空行内必须只有<CR><LF>而无其他空格。在HTTP/1.1协议中，所有的请求头，除post外，都是可选的。
 [http://www.cnblogs.com/yaozhongxiao/archive/2013/03/02/2940252.html]

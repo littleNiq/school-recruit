@@ -19,4 +19,5 @@
         （请求）头，例如Accept-Language: en
         空行
         可选的消息体　请求行和标题必须以<CR><LF>作为结尾（也就是，回车然后换行）。空行内必须只有<CR><LF>而无其他空格。在HTTP/1.1协议中，所有的请求头，除post外，都是可选的。
+        (在HTTP/1.1 协议中，所有的请求头，除Host外，都是可选的）
 [http://www.cnblogs.com/yaozhongxiao/archive/2013/03/02/2940252.html]

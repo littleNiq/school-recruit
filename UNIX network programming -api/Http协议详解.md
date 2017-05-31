@@ -11,3 +11,6 @@
         GET提交的数据大小有限制，最多只能有1024字节（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制。
         GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。
         GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。
+
+## 
+[http://www.cnblogs.com/yaozhongxiao/archive/2013/03/02/2940252.html]
